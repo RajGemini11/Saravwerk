@@ -37,7 +37,7 @@ Based on comprehensive analysis, the most important features are:
  Quick Links
 
 Jupyter Notebook
-
+https://github.com/RajGemini11/Saravwerk/blob/main/Used_Car_Model/used_car_model_prediction.ipynb
 
 
 This project follows the industry-standard CRISP-DM methodology:
