@@ -16,7 +16,7 @@ This project analyzes a Portuguese banking institution's telemarketing campaign 
 
 ## Project Structure
 
-Link to GitHub With Jupiter notebook - 
+Link to GitHub With Jupiter notebook - https://github.com/RajGemini11/Saravwerk/tree/main/Bank_Marketing_Campaign
 
 ## Analysis Workflow
 
