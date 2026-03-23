@@ -15,9 +15,14 @@ st.set_page_config(
 # Load model directly (no API needed!)
 @st.cache_resource
 def load_model():
-    model = joblib.load('hospital_staffing_model.pkl')
-    features = joblib.load('feature_columns.pkl')
-    metadata = joblib.load('model_metadata.pkl')
+    import os
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Load model files from the same directory
+    model = joblib.load(os.path.join(script_dir, 'hospital_staffing_model.pkl'))
+    features = joblib.load(os.path.join(script_dir, 'feature_columns.pkl'))
+    metadata = joblib.load(os.path.join(script_dir, 'model_metadata.pkl'))
     return model, features, metadata
 
 model, feature_columns, metadata = load_model()
