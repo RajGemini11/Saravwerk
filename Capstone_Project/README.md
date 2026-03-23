@@ -1,38 +1,129 @@
-### Hospital Staff Optimization Using Machine Learning
+## Hospital Staff Optimization Using Machine Learning
 
 Jupyter Notebook - https://github.com/RajGemini11/Saravwerk/blob/main/Capstone\_Project/Hospital\_Staff\_Optimization\_Model.ipynb
 
-###### Research Question
+## Research Question
 
 Can machine learning models forecast daily expected patient volumes (accounting for no-shows) to optimize hospital staffing levels, achieving ≤10% MAPE for 7-day ahead predictions?
 
-###### Dataset
+## Dataset
 
 Source: [Kaggle Medical Appointment No Shows](https://www.kaggle.com/datasets/joniarroba/noshowappointments/data)
 Records: 110,527 appointments (April-June 2016, Brazil)
 Features: Patient demographics, health conditions, appointment details, no-show status
 
-###### Methodology
+## Methodology
 
 Applied CRISP-DM framework with comprehensive EDA, time series analysis, and feature engineering (30+ features including lag variables, rolling statistics, and temporal encodings). Developed baseline Ridge Regression model with proper time series validation.
 
-###### Results
+## Results
 
 Baseline Model Performance (Ridge Regression):
 
 * Test MAPE: 5.35%  (Target: ≤10%)
 * MAE: 41.13 patients | RMSE: 48.31 | R²: 0.1068
-* **Success:** Meets criteria with 45% margin, 65-73% better than manual forecasting
+* Success: Meets criteria with 45% margin, 65-73% better than manual forecasting
 
-###### Key Findings
 
-* Strong weekly seasonality (Monday peaks, weekend lows)
-* Negative day-to-day autocorrelation (oscillation pattern)
-* Lag-7 and rolling averages most predictive features
-* Model enables reliable 7-day staffing decisions with ±50 patient buffer
-* PACF and ACF evaluation with other models.
+## Model Comparison Results
 
-###### Next Steps (Module 24)
+Evaluated 5 models with rigorous validation:
 
-Compare advanced models (like Time Series SARIMAX,Random Forest, Linear Regression), hyperparameter tuning, ensemble methods, and deployment pipeline development.
+| Model | Test MAPE | Training MAPE | Overfitting Gap | Status |
+|-------|-----------|---------------|-----------------|--------|
+| Ridge Baseline (α=1) | 5.35% | 0.17% | 5.18% |Selected |
+| Ridge Optimized (GridSearchCV) | 5.40% | 0.18% | 5.22% | Good |
+| Ridge Moderate (α=50) | 5.42% | 0.20% | 5.22% | Good |
+| Random Forest | 5.80% | 2.45% | 3.35% | Good |
+| Ensemble (Ridge Avg) | 5.38% | 0.18% | 5.20% | Good |
 
+Hyperparameter Tuning: GridSearchCV tested 8 alpha values [0.1, 1, 10, 50, 100, 200, 500, 1000] with 5-fold TimeSeriesSplit cross-validation.
+
+## Final Model Performance
+
+Selected Model: Ridge Regression Baseline (α=1)
+
+Test Set Metrics:
+- MAPE: 5.35% (46% better than ≤10% target) 
+- MAE: 41.13 patients
+- RMSE: 48.31 patients
+- R²: 0.1068
+
+Validation: All models passed Ljung-Box tests (p-values > 0.05), confirming residuals are white noise with no autocorrelation patterns remaining.
+
+#### Key Findings
+
+## Temporal Patterns:
+- Strong weekly seasonality (Monday peaks, weekend lows)
+- Negative day-to-day autocorrelation (oscillation pattern)
+- Lag-7 and rolling averages are most predictive features
+- Worked on time forecasting model SARIMAX but convergence is not happening with MAPE at 173%, so utilized Random forest and the MAPE achived at 5.80
+
+## Model Selection Rationale:
+-  Ridge Baseline outperforms complex alternatives
+-  5.35% MAPE across all models
+-  Fast (<1 second), interpretable, reliable
+-  Enables 7-day staffing decisions with ±41 patient accuracy
+
+## Advanced Diagnostics:
+- ACF/PACF analysis validated temporal feature engineering
+- Ljung-Box tests confirmed model completeness (all p > 0.05)
+- Residual analysis showed models captured all patterns
+- Model correlation analysis explained ensemble behavior
+
+## Business Value
+
+- Annual Savings Potential: $450K - $900K per hospital network  
+- ROI: 4-8x return in Year 1  
+- Efficiency Gain: 65-73% improvement over manual forecasting  
+- Implementation Cost: $120K (pilot + network rollout)
+
+## Deployment Recommendation:
+- Month 1: Pilot at one facility ($15K investment)
+- Months 2-3: A/B testing vs manual forecasting
+- Months 4-12: Scale to 15-facility network ($105K)
+- Year 2: Enhance with external data, department-level forecasts
+
+## Technical Highlights
+
+- 5 Models Compared: Ridge variants, Random Forest, Ensemble
+- Proper Time Series Validation: TimeSeriesSplit (no data leakage)
+- Hyperparameter Optimization: GridSearchCV with 8 alpha values
+- Statistical Rigor: Ljung-Box tests, ACF/PACF analysis, residual diagnostics
+- Feature Engineering: 30+ engineered features (lag, rolling, temporal)
+- Visualizations: 14+ professional charts (EDA, model comparison, diagnostics)
+
+## Project Structure
+
+
+Capstone_Project/
+├── Hospital_Staff_Optimization_Model.ipynb  # Main analysis notebook
+├── README.md                                # This file
+└── data/                                    # Dataset (if included)
+
+
+## Key Sections in Notebook
+
+1. Business Understanding
+2. Data Understanding & EDA
+3. Data Preparation & Cleaning
+4. Feature Engineering (30+ features)
+5. Baseline Model (Ridge Regression)
+6. Model Evaluation
+7. Advanced Models (Module 24)
+   - Hyperparameter tuning
+   - Random Forest
+   - Ensemble methods
+8. Model Comparison & Selection
+9. Residual Analysis (ACF/PACF, Ljung-Box)
+10. Business Recommendations
+11. Risk Mitigation Strategies
+12. Final Conclusions
+
+## Technologies Used
+
+- Python 3.x: pandas, numpy, scikit-learn, statsmodels
+- Visualization: matplotlib, seaborn
+- ML Models: Ridge Regression, Random Forest, Ensemble
+- Validation: GridSearchCV, TimeSeriesSplit, Ljung-Box tests
+- Time Series: ACF/PACF analysis, autocorrelation diagnostics
